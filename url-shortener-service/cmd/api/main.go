@@ -5,7 +5,7 @@ import (
 	pb "urlShortener/proto"
 )
 
-type server struct {
+type Server struct {
 	pb.UnimplementedUrlShortenerServiceServer
 }
 

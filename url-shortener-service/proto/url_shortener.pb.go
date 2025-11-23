@@ -23,7 +23,7 @@ const (
 
 type UrlShortenerRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	A             string                 `protobuf:"bytes,1,opt,name=a,proto3" json:"a,omitempty"`
+	UrlPath       string                 `protobuf:"bytes,1,opt,name=url_path,json=urlPath,proto3" json:"url_path,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -58,9 +58,9 @@ func (*UrlShortenerRequest) Descriptor() ([]byte, []int) {
 	return file_url_shortener_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *UrlShortenerRequest) GetA() string {
+func (x *UrlShortenerRequest) GetUrlPath() string {
 	if x != nil {
-		return x.A
+		return x.UrlPath
 	}
 	return ""
 }
@@ -113,9 +113,9 @@ var File_url_shortener_proto protoreflect.FileDescriptor
 
 const file_url_shortener_proto_rawDesc = "" +
 	"\n" +
-	"\x13url_shortener.proto\x12\x05proto\"#\n" +
-	"\x13UrlShortenerRequest\x12\f\n" +
-	"\x01a\x18\x01 \x01(\tR\x01a\"0\n" +
+	"\x13url_shortener.proto\x12\x05proto\"0\n" +
+	"\x13UrlShortenerRequest\x12\x19\n" +
+	"\burl_path\x18\x01 \x01(\tR\aurlPath\"0\n" +
 	"\x16SetUrlShorteneResponse\x12\x16\n" +
 	"\x06result\x18\x01 \x01(\tR\x06result2c\n" +
 	"\x13UrlShortenerService\x12L\n" +
