@@ -1,0 +1,31 @@
+
+
+services:
+
+  url-shortener-service:
+    build:
+      context: ./../url-shortener-service
+      dockerfile: ./../url-shortener-service/url-shortener-service.dockerfile
+    restart: always
+    ports:
+      - "8080:80"
+    deploy:
+      mode: replicated
+      replicas: 1
+
+
+  postgres:
+    image: 'postgres:14.5'
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: url_shortener
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./db-data/postgres/:/var/lib/postgresql/data/
