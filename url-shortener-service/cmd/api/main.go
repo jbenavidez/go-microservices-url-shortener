@@ -19,7 +19,6 @@ type Config struct {
 func main() {
 	fmt.Println("starting url-shortener service...")
 	app := Config{}
-	// read from command line
 
 	conn := app.connectToDB()
 	if conn == nil {
