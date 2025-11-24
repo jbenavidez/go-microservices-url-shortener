@@ -2,7 +2,7 @@
 
 ## Concepts
 *   **url-shortener-service**: grpc server to  implement url shortener 
-*   **client-service**: allow the user to perform CRUD operations, and send perform those operation on the `url-shortener-service` via gRPC
+*   **client-service**: allow the user to perform CRUD operations, and  perform those operation on the `url-shortener-service` via gRPC
 *   **postgres**: database
 
  
