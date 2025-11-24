@@ -24,7 +24,7 @@ The command will build the binary files for the `client-service` and `url-shorte
 
 
 ## URL Shortener APIs
-*   **Desc**: Create URl shortener 
+*   **Desc**: Create URL Shortener 
 *   **EndPoint**:{domain-name}//url-shortener
 *   **Method**: Post
 *   **Payload**:
