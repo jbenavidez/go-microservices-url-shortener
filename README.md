@@ -39,7 +39,7 @@ The command will build the binary files for the `client-service` and `url-shorte
     "error": false,
     "message": "URL Shortener successfully",
     "data": {
-        "full_path": "https://www.google.comdsaasa/adadsasdas",
+        "full_path": "https://www.google/a/pretty/long/url",
         "shortcut": "9024e8"
     }
 }
