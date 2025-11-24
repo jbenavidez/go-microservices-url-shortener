@@ -1,6 +1,8 @@
 postgres-data/
 .DS_Store
 
+project/db-data
+
 # compiled output
 /dist
 /tmp
