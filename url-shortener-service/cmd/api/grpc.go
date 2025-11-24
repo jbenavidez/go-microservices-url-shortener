@@ -55,11 +55,11 @@ func (s *server) AddUrlShortener(ctx context.Context, request *pb.AddUrlShortene
 	urlShortener.FullPath = urlPath
 	urlShortener.Shortcut = shortener
 	//save
-	// _, err := app.DB.CreateUrlShortener(urlShortener)
-	// if err != nil {
-	// 	fmt.Println("error:", err)
-	// 	return nil, err
-	// }
+	_, err := app.DB.CreateUrlShortener(urlShortener)
+	if err != nil {
+		fmt.Println("error:", err)
+		return nil, err
+	}
 	// //return response
 	return &pb.AddUrlShorteneResponse{Result: urlShortener.Shortcut}, nil
 
