@@ -10,7 +10,7 @@ func (a *application) routes() http.Handler {
 
 	mux := chi.NewRouter()
 
-	mux.Get("/url-shortener", a.CreateUser)
+	mux.Post("/url-shortener", a.CreateUrlShortener)
 
 	return mux
 }

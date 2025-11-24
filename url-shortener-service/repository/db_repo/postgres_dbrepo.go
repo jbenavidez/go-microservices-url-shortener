@@ -57,10 +57,10 @@ func (m *PostgresDBRepo) CreateUrlShortener(urlShortener models.UrlShortener) (i
 	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
 	defer cancel()
 	stmt := `
-		insert into Users
+		insert into url_shortener
 			(full_path, shortcut)
 		values	
-			($1,$2,) 
+			($1,$2) 
 		returning id
 	`
 

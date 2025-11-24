@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "./"; 
+
+message AddUrlShortenerRequest {
+  string url_path = 1;
+ 
+}
+
+message UrlShortener{
+  int64 id = 1;
+  string url_path = 2;
+  string shortcut = 3;
+}
+
+
+message AddUrlShorteneResponse { 
+  string result = 1; 
+}
+
+service UrlShortenerService {
+  rpc AddUrlShortener(AddUrlShortenerRequest) returns (AddUrlShorteneResponse);
+ 
+}

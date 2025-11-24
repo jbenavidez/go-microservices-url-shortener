@@ -1,15 +1,29 @@
 services:
 
+
+  client-service:
+    build:
+      context: ./../client-service
+      dockerfile: ./../client-service/client-service.dockerfile
+    restart: always
+    ports:
+      - "8080:8080"
+    deploy:
+      mode: replicated
+      replicas: 1
+
   url-shortener-service:
     build:
       context: ./../url-shortener-service
       dockerfile: ./../url-shortener-service/url-shortener-service.dockerfile
     restart: always
-    ports:
-      - "4040:40"
+
     deploy:
       mode: replicated
       replicas: 1
+    environment:
+      DSN: "host=postgres port=5432 user=postgres password=postgres dbname=url_shortener sslmode=disable timezone=UTC connect_timeout=5"
+
 
   postgres:
     image: 'postgres:14.5'
