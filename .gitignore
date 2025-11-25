@@ -1,7 +1,7 @@
 postgres-data/
 .DS_Store
 
-project/db-data
+project/db-data/*
 
 # compiled output
 /dist
