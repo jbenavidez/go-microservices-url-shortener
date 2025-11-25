@@ -8,6 +8,7 @@ import (
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 // CreateUrlShortener
@@ -26,7 +27,7 @@ func (app *application) CreateUrlShortener(w http.ResponseWriter, r *http.Reques
 	if err != nil {
 		panic(err)
 	}
-	//client := pb.NewAddServiceClient(conn)
+
 	client := pb.NewUrlShortenerServiceClient(conn)
 
 	//set request
@@ -48,6 +49,32 @@ func (app *application) CreateUrlShortener(w http.ResponseWriter, r *http.Reques
 		Data:    payload,
 	}
 	// send resposne
+	_ = app.writeJSON(w, http.StatusOK, resp)
+
+}
+
+// GetAllUrlShorteners get all recods
+func (app *application) GetAllUrlShorteners(w http.ResponseWriter, r *http.Request) {
+
+	conn, err := grpc.Dial("url-shortener-service:50001", grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
+	if err != nil {
+		panic(err)
+	}
+
+	client := pb.NewUrlShortenerServiceClient(conn)
+	response, err := client.GetAllUrlShorteners(r.Context(), &emptypb.Empty{})
+	if err != nil {
+		fmt.Println("something break", err)
+		fmt.Fprint(w, err)
+		return
+	}
+
+	resp := JSONResponse{
+		Error:   false,
+		Message: "retrieved URL Shortener successfully 2",
+		Data:    response,
+	}
+
 	_ = app.writeJSON(w, http.StatusOK, resp)
 
 }

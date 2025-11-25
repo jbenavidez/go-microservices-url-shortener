@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -19,7 +20,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	UrlShortenerService_AddUrlShortener_FullMethodName = "/proto.UrlShortenerService/AddUrlShortener"
+	UrlShortenerService_AddUrlShortener_FullMethodName     = "/proto.UrlShortenerService/AddUrlShortener"
+	UrlShortenerService_GetAllUrlShorteners_FullMethodName = "/proto.UrlShortenerService/GetAllUrlShorteners"
 )
 
 // UrlShortenerServiceClient is the client API for UrlShortenerService service.
@@ -27,6 +29,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UrlShortenerServiceClient interface {
 	AddUrlShortener(ctx context.Context, in *AddUrlShortenerRequest, opts ...grpc.CallOption) (*AddUrlShorteneResponse, error)
+	GetAllUrlShorteners(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllUrlShortenersResponse, error)
 }
 
 type urlShortenerServiceClient struct {
@@ -47,11 +50,22 @@ func (c *urlShortenerServiceClient) AddUrlShortener(ctx context.Context, in *Add
 	return out, nil
 }
 
+func (c *urlShortenerServiceClient) GetAllUrlShorteners(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllUrlShortenersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetAllUrlShortenersResponse)
+	err := c.cc.Invoke(ctx, UrlShortenerService_GetAllUrlShorteners_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UrlShortenerServiceServer is the server API for UrlShortenerService service.
 // All implementations must embed UnimplementedUrlShortenerServiceServer
 // for forward compatibility.
 type UrlShortenerServiceServer interface {
 	AddUrlShortener(context.Context, *AddUrlShortenerRequest) (*AddUrlShorteneResponse, error)
+	GetAllUrlShorteners(context.Context, *emptypb.Empty) (*GetAllUrlShortenersResponse, error)
 	mustEmbedUnimplementedUrlShortenerServiceServer()
 }
 
@@ -64,6 +78,9 @@ type UnimplementedUrlShortenerServiceServer struct{}
 
 func (UnimplementedUrlShortenerServiceServer) AddUrlShortener(context.Context, *AddUrlShortenerRequest) (*AddUrlShorteneResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddUrlShortener not implemented")
+}
+func (UnimplementedUrlShortenerServiceServer) GetAllUrlShorteners(context.Context, *emptypb.Empty) (*GetAllUrlShortenersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllUrlShorteners not implemented")
 }
 func (UnimplementedUrlShortenerServiceServer) mustEmbedUnimplementedUrlShortenerServiceServer() {}
 func (UnimplementedUrlShortenerServiceServer) testEmbeddedByValue()                             {}
@@ -104,6 +121,24 @@ func _UrlShortenerService_AddUrlShortener_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UrlShortenerService_GetAllUrlShorteners_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UrlShortenerServiceServer).GetAllUrlShorteners(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UrlShortenerService_GetAllUrlShorteners_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UrlShortenerServiceServer).GetAllUrlShorteners(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UrlShortenerService_ServiceDesc is the grpc.ServiceDesc for UrlShortenerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -114,6 +149,10 @@ var UrlShortenerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddUrlShortener",
 			Handler:    _UrlShortenerService_AddUrlShortener_Handler,
+		},
+		{
+			MethodName: "GetAllUrlShorteners",
+			Handler:    _UrlShortenerService_GetAllUrlShorteners_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

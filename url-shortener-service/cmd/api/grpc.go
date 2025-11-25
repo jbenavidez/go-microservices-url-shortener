@@ -11,6 +11,7 @@ import (
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 const shortenerLenght = 6
@@ -63,4 +64,15 @@ func (s *server) AddUrlShortener(ctx context.Context, request *pb.AddUrlShortene
 	// //return response
 	return &pb.AddUrlShorteneResponse{Result: urlShortener.Shortcut}, nil
 
+}
+
+func (s *server) GetAllUrlShorteners(ctx context.Context, request *emptypb.Empty) (*pb.GetAllUrlShortenersResponse, error) {
+
+	allUrls, err := app.DB.AllUrlShorteners()
+	if err != nil {
+		fmt.Println("error:", err)
+		return nil, err
+	}
+	fmt.Println("hello from GetAllUrlShorteners 2", allUrls)
+	return &pb.GetAllUrlShortenersResponse{Result: allUrls}, nil
 }

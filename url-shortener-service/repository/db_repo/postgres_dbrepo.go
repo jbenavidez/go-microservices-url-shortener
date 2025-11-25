@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 	"urlShortener/models"
+	pb "urlShortener/proto"
 )
 
 type PostgresDBRepo struct {
@@ -18,7 +19,7 @@ func (m *PostgresDBRepo) Connection() *sql.DB {
 	return m.DB
 }
 
-func (m *PostgresDBRepo) AllUrlShortener() ([]*models.UrlShortener, error) {
+func (m *PostgresDBRepo) AllUrlShorteners() ([]*pb.UrlShortener, error) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
 	defer cancel()
@@ -35,12 +36,12 @@ func (m *PostgresDBRepo) AllUrlShortener() ([]*models.UrlShortener, error) {
 	}
 	defer rows.Close()
 
-	var urlShortenerList []*models.UrlShortener
+	var urlShortenerList []*pb.UrlShortener
 
 	for rows.Next() {
-		var urlShortener models.UrlShortener
+		var urlShortener pb.UrlShortener
 		err := rows.Scan(
-			&urlShortener.FullPath,
+			&urlShortener.UrlPath,
 			&urlShortener.Shortcut,
 		)
 		if err != nil {
