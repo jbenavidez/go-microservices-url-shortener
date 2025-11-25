@@ -59,7 +59,7 @@ The command will build the binary files for the `client-service` and `url-shorte
   "data": {
     "result": [
       {
-        "url_path": "adsdsds",
+        "url_path": "https://www.google.com/some/path",
         "shortcut": "adsdsds22"
       },
       {
