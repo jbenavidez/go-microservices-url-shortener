@@ -71,7 +71,7 @@ func (app *application) GetAllUrlShorteners(w http.ResponseWriter, r *http.Reque
 
 	resp := JSONResponse{
 		Error:   false,
-		Message: "retrieved URL Shortener successfully 2",
+		Message: "retrieved URL Shortener successfully",
 		Data:    response,
 	}
 

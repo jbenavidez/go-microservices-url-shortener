@@ -73,6 +73,5 @@ func (s *server) GetAllUrlShorteners(ctx context.Context, request *emptypb.Empty
 		fmt.Println("error:", err)
 		return nil, err
 	}
-	fmt.Println("hello from GetAllUrlShorteners 2", allUrls)
 	return &pb.GetAllUrlShortenersResponse{Result: allUrls}, nil
 }
