@@ -26,7 +26,7 @@ func (m *PostgresDBRepo) AllUrlShorteners() ([]*pb.UrlShortener, error) {
 
 	query := `
 		select
-			full_path, shortcut
+			id, full_path, shortcut
 		from
 			url_shortener
 	`
@@ -41,6 +41,7 @@ func (m *PostgresDBRepo) AllUrlShorteners() ([]*pb.UrlShortener, error) {
 	for rows.Next() {
 		var urlShortener pb.UrlShortener
 		err := rows.Scan(
+			&urlShortener.Id,
 			&urlShortener.UrlPath,
 			&urlShortener.Shortcut,
 		)
