@@ -7,7 +7,7 @@ import (
 	"net"
 
 	"urlShortener/models"
-	pb "urlShortener/proto"
+	pb "urlShortener/proto/generated"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -74,4 +74,19 @@ func (s *server) GetAllUrlShorteners(ctx context.Context, request *emptypb.Empty
 		return nil, err
 	}
 	return &pb.GetAllUrlShortenersResponse{Result: allUrls}, nil
+}
+
+func (s *server) UpdateUrlShortener(ctx context.Context, request *pb.UpdateUrlShortenerRequest) (*pb.UpdateUrlShortenerResponse, error) {
+
+	payload := request.Payload
+	// generate new shortcut
+	newShortcut := app.GenerateUniqueStringFromLongUrlPath(payload.UrlPath, shortenerLenght)
+	payload.Shortcut = newShortcut
+	// update record
+	err := app.DB.UpdateUrlShortener(payload)
+	if err != nil {
+		return nil, err
+	}
+	return &pb.UpdateUrlShortenerResponse{Result: payload.Shortcut}, nil
+
 }

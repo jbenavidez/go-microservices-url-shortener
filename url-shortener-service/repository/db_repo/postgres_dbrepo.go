@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 	"urlShortener/models"
-	pb "urlShortener/proto"
+	pb "urlShortener/proto/generated"
 )
 
 type PostgresDBRepo struct {
@@ -77,5 +77,28 @@ func (m *PostgresDBRepo) CreateUrlShortener(urlShortener models.UrlShortener) (i
 		return 0, err
 	}
 	return newID, nil
+
+}
+
+func (m *PostgresDBRepo) UpdateUrlShortener(urlShortener *pb.UrlShortener) error {
+
+	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
+	defer cancel()
+
+	stmt := `
+		update url_shortener set full_path=$1, shortcut=$2
+		where id = $3
+	`
+
+	_, err := m.DB.ExecContext(ctx, stmt,
+		urlShortener.UrlPath,
+		urlShortener.Shortcut,
+		urlShortener.Id,
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
 
 }
