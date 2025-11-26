@@ -71,3 +71,27 @@ The command will build the binary files for the `client-service` and `url-shorte
 }
     
 ```
+
+
+*   **Desc**: Update URL
+*   **EndPoint**:{domain-name}/all-url-shortener/{id}
+*   **Method**: Put
+*   **Payload**:
+  ```json
+    {
+        "url_path": "https://www.google/a/new/pretty/long/url",
+    }
+  ```
+*   **Response**:
+  ```json
+{
+    "error": false,
+    "message": " URL was updated successfully",
+    "data": {
+        "id": 1,
+        "url_path": "https://www.google.comdsaasa/adadsasdas",
+        "shortcut": "de141f"
+    }
+}
+    
+```
