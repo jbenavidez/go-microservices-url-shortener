@@ -90,3 +90,18 @@ func (s *server) UpdateUrlShortener(ctx context.Context, request *pb.UpdateUrlSh
 	return &pb.UpdateUrlShortenerResponse{Result: payload.Shortcut}, nil
 
 }
+
+func (s *server) GetUrlShortener(ctx context.Context, request *pb.GetUrlShortenerRequest) (*pb.GetUrlShortenerResponse, error) {
+
+	urlShortcut := request.GetShortcut()
+
+	// get url value
+	urlObj, err := app.DB.GetUrlShorteners(urlShortcut)
+	if err != nil {
+		fmt.Println("error:", err)
+		return nil, err
+	}
+
+	return &pb.GetUrlShortenerResponse{Result: urlObj}, nil
+
+}

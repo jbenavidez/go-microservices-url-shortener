@@ -23,6 +23,7 @@ const (
 	UrlShortenerService_AddUrlShortener_FullMethodName     = "/proto.UrlShortenerService/AddUrlShortener"
 	UrlShortenerService_GetAllUrlShorteners_FullMethodName = "/proto.UrlShortenerService/GetAllUrlShorteners"
 	UrlShortenerService_UpdateUrlShortener_FullMethodName  = "/proto.UrlShortenerService/UpdateUrlShortener"
+	UrlShortenerService_GetUrlShortener_FullMethodName     = "/proto.UrlShortenerService/GetUrlShortener"
 )
 
 // UrlShortenerServiceClient is the client API for UrlShortenerService service.
@@ -32,6 +33,7 @@ type UrlShortenerServiceClient interface {
 	AddUrlShortener(ctx context.Context, in *AddUrlShortenerRequest, opts ...grpc.CallOption) (*AddUrlShorteneResponse, error)
 	GetAllUrlShorteners(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllUrlShortenersResponse, error)
 	UpdateUrlShortener(ctx context.Context, in *UpdateUrlShortenerRequest, opts ...grpc.CallOption) (*UpdateUrlShortenerResponse, error)
+	GetUrlShortener(ctx context.Context, in *GetUrlShortenerRequest, opts ...grpc.CallOption) (*GetUrlShortenerResponse, error)
 }
 
 type urlShortenerServiceClient struct {
@@ -72,6 +74,16 @@ func (c *urlShortenerServiceClient) UpdateUrlShortener(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *urlShortenerServiceClient) GetUrlShortener(ctx context.Context, in *GetUrlShortenerRequest, opts ...grpc.CallOption) (*GetUrlShortenerResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetUrlShortenerResponse)
+	err := c.cc.Invoke(ctx, UrlShortenerService_GetUrlShortener_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UrlShortenerServiceServer is the server API for UrlShortenerService service.
 // All implementations must embed UnimplementedUrlShortenerServiceServer
 // for forward compatibility.
@@ -79,6 +91,7 @@ type UrlShortenerServiceServer interface {
 	AddUrlShortener(context.Context, *AddUrlShortenerRequest) (*AddUrlShorteneResponse, error)
 	GetAllUrlShorteners(context.Context, *emptypb.Empty) (*GetAllUrlShortenersResponse, error)
 	UpdateUrlShortener(context.Context, *UpdateUrlShortenerRequest) (*UpdateUrlShortenerResponse, error)
+	GetUrlShortener(context.Context, *GetUrlShortenerRequest) (*GetUrlShortenerResponse, error)
 	mustEmbedUnimplementedUrlShortenerServiceServer()
 }
 
@@ -97,6 +110,9 @@ func (UnimplementedUrlShortenerServiceServer) GetAllUrlShorteners(context.Contex
 }
 func (UnimplementedUrlShortenerServiceServer) UpdateUrlShortener(context.Context, *UpdateUrlShortenerRequest) (*UpdateUrlShortenerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUrlShortener not implemented")
+}
+func (UnimplementedUrlShortenerServiceServer) GetUrlShortener(context.Context, *GetUrlShortenerRequest) (*GetUrlShortenerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUrlShortener not implemented")
 }
 func (UnimplementedUrlShortenerServiceServer) mustEmbedUnimplementedUrlShortenerServiceServer() {}
 func (UnimplementedUrlShortenerServiceServer) testEmbeddedByValue()                             {}
@@ -173,6 +189,24 @@ func _UrlShortenerService_UpdateUrlShortener_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UrlShortenerService_GetUrlShortener_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUrlShortenerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UrlShortenerServiceServer).GetUrlShortener(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UrlShortenerService_GetUrlShortener_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UrlShortenerServiceServer).GetUrlShortener(ctx, req.(*GetUrlShortenerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UrlShortenerService_ServiceDesc is the grpc.ServiceDesc for UrlShortenerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -191,6 +225,10 @@ var UrlShortenerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateUrlShortener",
 			Handler:    _UrlShortenerService_UpdateUrlShortener_Handler,
+		},
+		{
+			MethodName: "GetUrlShortener",
+			Handler:    _UrlShortenerService_GetUrlShortener_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

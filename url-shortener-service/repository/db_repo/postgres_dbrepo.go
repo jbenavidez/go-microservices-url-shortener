@@ -102,3 +102,32 @@ func (m *PostgresDBRepo) UpdateUrlShortener(urlShortener *pb.UrlShortener) error
 	return nil
 
 }
+
+func (m *PostgresDBRepo) GetUrlShorteners(urlShorcut string) (*pb.UrlShortener, error) {
+
+	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
+	defer cancel()
+	fmt.Println("loking form ", urlShorcut)
+	query := `
+		select
+			id, full_path, shortcut
+		from
+			url_shortener
+		where shortcut = $1
+	`
+	row := m.DB.QueryRowContext(ctx, query, urlShorcut)
+	var urlShortener pb.UrlShortener
+
+	err := row.Scan(
+		&urlShortener.Id,
+		&urlShortener.UrlPath,
+		&urlShortener.Shortcut,
+	)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	return &urlShortener, nil
+
+}

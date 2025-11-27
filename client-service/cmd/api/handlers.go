@@ -3,13 +3,12 @@ package main
 import (
 	"client/cmd/api/models"
 	pb "client/proto/generated"
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 
 	"github.com/go-chi/chi/v5"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
@@ -25,19 +24,12 @@ func (app *application) CreateUrlShortener(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	conn, err := grpc.Dial("url-shortener-service:50001", grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
-	if err != nil {
-		panic(err)
-	}
-
-	client := pb.NewUrlShortenerServiceClient(conn)
-
 	//set request
 	req := &pb.AddUrlShortenerRequest{
 		UrlPath: payload.FullPath,
 	}
 	//call grpc
-	response, err := client.AddUrlShortener(r.Context(), req)
+	response, err := app.GRPCClient.AddUrlShortener(r.Context(), req)
 	if err != nil {
 		fmt.Println("something break", err)
 		return
@@ -58,13 +50,7 @@ func (app *application) CreateUrlShortener(w http.ResponseWriter, r *http.Reques
 // GetAllUrlShorteners get all recods
 func (app *application) GetAllUrlShorteners(w http.ResponseWriter, r *http.Request) {
 
-	conn, err := grpc.Dial("url-shortener-service:50001", grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
-	if err != nil {
-		panic(err)
-	}
-
-	client := pb.NewUrlShortenerServiceClient(conn)
-	response, err := client.GetAllUrlShorteners(r.Context(), &emptypb.Empty{})
+	response, err := app.GRPCClient.GetAllUrlShorteners(r.Context(), &emptypb.Empty{})
 	if err != nil {
 		fmt.Println("something break", err)
 		fmt.Fprint(w, err)
@@ -97,17 +83,13 @@ func (app *application) UpdateUrlShortener(w http.ResponseWriter, r *http.Reques
 		return
 	}
 	payload.Id = int64(urlID)
-	conn, err := grpc.Dial("url-shortener-service:50001", grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
-	if err != nil {
-		panic(err)
-	}
-	client := pb.NewUrlShortenerServiceClient(conn)
+
 	//set request
 	req := &pb.UpdateUrlShortenerRequest{
 		Payload: &payload,
 	}
 	//call grpc
-	newShorcut, err := client.UpdateUrlShortener(r.Context(), req)
+	newShorcut, err := app.GRPCClient.UpdateUrlShortener(r.Context(), req)
 	if err != nil {
 		fmt.Println("something break", err)
 		return
@@ -117,6 +99,35 @@ func (app *application) UpdateUrlShortener(w http.ResponseWriter, r *http.Reques
 		Error:   false,
 		Message: " URL was updated successfully",
 		Data:    &payload,
+	}
+
+	_ = app.writeJSON(w, http.StatusOK, resp)
+
+}
+
+// GetUrlShortener get url
+func (app *application) GetUrlShortener(w http.ResponseWriter, r *http.Request) {
+	shortcut := chi.URLParam(r, "shortcut")
+	if len(shortcut) == 0 {
+		app.errorJSON(w, errors.New("invalid shortcut"))
+		return
+	}
+	fmt.Println("the value ", shortcut)
+
+	//set request
+	req := &pb.GetUrlShortenerRequest{
+		Shortcut: shortcut,
+	}
+
+	response, err := app.GRPCClient.GetUrlShortener(r.Context(), req)
+	if err != nil {
+		fmt.Println("something break", err)
+		return
+	}
+	resp := JSONResponse{
+		Error:   false,
+		Message: " URL was updated successfully",
+		Data:    response.Result,
 	}
 
 	_ = app.writeJSON(w, http.StatusOK, resp)

@@ -13,5 +13,6 @@ func (a *application) routes() http.Handler {
 	mux.Post("/url-shortener", a.CreateUrlShortener)
 	mux.Get("/all-url-shortener", a.GetAllUrlShorteners)
 	mux.Put("/url-shortener/{id}", a.UpdateUrlShortener)
+	mux.Get("/url-shortener/{shortcut}", a.GetUrlShortener)
 	return mux
 }

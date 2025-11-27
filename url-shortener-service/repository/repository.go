@@ -11,4 +11,5 @@ type DatabaseRepo interface {
 	CreateUrlShortener(urlShortener models.UrlShortener) (int, error)
 	AllUrlShorteners() ([]*pb.UrlShortener, error)
 	UpdateUrlShortener(urlShortener *pb.UrlShortener) error
+	GetUrlShorteners(urlShorcut string) (*pb.UrlShortener, error)
 }

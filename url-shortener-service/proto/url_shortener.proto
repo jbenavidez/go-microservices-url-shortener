@@ -37,10 +37,24 @@ message UpdateUrlShortenerResponse {
   string result = 1; 
 }
 
+
+message GetUrlShortenerRequest {
+    string shortcut = 1;
+
+}
+
+
+message GetUrlShortenerResponse {
+    UrlShortener result = 1;
+
+}
+
+
 service UrlShortenerService {
   rpc AddUrlShortener(AddUrlShortenerRequest) returns (AddUrlShorteneResponse);
   rpc GetAllUrlShorteners(google.protobuf.Empty) returns (GetAllUrlShortenersResponse);
   rpc UpdateUrlShortener(UpdateUrlShortenerRequest) returns (UpdateUrlShortenerResponse);
+  rpc GetUrlShortener(GetUrlShortenerRequest) returns (GetUrlShortenerResponse);
 }
 
 
