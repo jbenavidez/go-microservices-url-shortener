@@ -126,7 +126,7 @@ func (app *application) GetUrlShortener(w http.ResponseWriter, r *http.Request) 
 	}
 	resp := JSONResponse{
 		Error:   false,
-		Message: " URL was updated successfully",
+		Message: " URL was retrieved successfully",
 		Data:    response.Result,
 	}
 
