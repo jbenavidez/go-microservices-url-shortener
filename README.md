@@ -11,7 +11,7 @@
 <ul>
 <li>Go</li>
 <li>gRPC</li>
-<li>PostgreSQL </li>
+<li>Postgres </li>
 </ul>
 
 
