@@ -22,7 +22,12 @@ $ make up_build
 ```
 The command will build the binary files for the `client-service` and `url-shortener-services`, and   it will start the containers
 
-
+*   **Make  Migrations**: cd to project -> then run the following commands 
+  ```bash
+$ make db_migrations
+```
+*   **Note**: make sure `soda` is installed in your local env
+ 
 ## URL Shortener APIs
 *   **Desc**: Create URL Shortener 
 *   **EndPoint**:{domain-name}/url-shortener
