@@ -2,7 +2,7 @@
 
 ## Concepts
 *   **url-shortener-service**: grpc server to  implement url shortener 
-*   **client-service**: allow the user to perform CRUD operations, and  perform those operation on the `url-shortener-service` via gRPC
+*   **client-service**: allow the user to perform CRUD operations, and  perform those operations on the `url-shortener-service` via gRPC
 *   **postgres**: database
 
  
@@ -49,7 +49,7 @@ The command will build the binary files for the `client-service` and `url-shorte
 
 *   **Desc**: Get All
 *   **EndPoint**:{domain-name}/all-url-shortener
-*   **Method**: get
+*   **Method**: Get
  
 *   **Response**:
   ```json
@@ -91,6 +91,25 @@ The command will build the binary files for the `client-service` and `url-shorte
         "id": 1,
         "url_path": "https://www.google.comdsaasa/adadsasdas",
         "shortcut": "de141f"
+    }
+}
+    
+```
+
+
+
+*   **Desc**: Get URL by Shortcut
+*   **EndPoint**:{domain-name}/all-url-shortener/{shortcut}
+*   **Method**: Get
+*   **Response**:
+  ```json
+{
+    "error": false,
+    "message": " URL was retrieved successfully",
+    "data": {
+        "id": 1,
+        "url_path": "https://www.google.comd/long/path/1/3/4/3",
+        "shortcut": "f5a9e9"
     }
 }
     
