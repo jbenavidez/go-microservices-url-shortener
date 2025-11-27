@@ -1,4 +1,4 @@
-# go-microservices-url-shortener(wip)
+# Go: URL Shortener Microservice 
 
 ## Concepts
 *   **url-shortener-service**: grpc server to  implement url shortener 
