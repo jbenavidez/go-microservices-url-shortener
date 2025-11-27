@@ -117,9 +117,9 @@ The command will build the binary files for the `client-service` and `url-shorte
 
 
 
-*   **Desc**: Delete UR
+*   **Desc**: Delete Url
 *   **EndPoint**:{domain-name}/url-shortener/{id}
-*   **Method**: Get
+*   **Method**: Delete
 *   **Response**:
   ```json
 {
