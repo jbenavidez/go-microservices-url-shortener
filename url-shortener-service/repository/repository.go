@@ -12,4 +12,5 @@ type DatabaseRepo interface {
 	AllUrlShorteners() ([]*pb.UrlShortener, error)
 	UpdateUrlShortener(urlShortener *pb.UrlShortener) error
 	GetUrlShorteners(urlShorcut string) (*pb.UrlShortener, error)
+	DeleteUrlShortener(urlID int64) error
 }

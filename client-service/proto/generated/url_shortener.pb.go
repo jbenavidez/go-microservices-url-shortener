@@ -390,6 +390,94 @@ func (x *GetUrlShortenerResponse) GetResult() *UrlShortener {
 	return nil
 }
 
+type DeleteUrlShortenerRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteUrlShortenerRequest) Reset() {
+	*x = DeleteUrlShortenerRequest{}
+	mi := &file_url_shortener_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteUrlShortenerRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteUrlShortenerRequest) ProtoMessage() {}
+
+func (x *DeleteUrlShortenerRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_url_shortener_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteUrlShortenerRequest.ProtoReflect.Descriptor instead.
+func (*DeleteUrlShortenerRequest) Descriptor() ([]byte, []int) {
+	return file_url_shortener_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *DeleteUrlShortenerRequest) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+type DeleteShortenerResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Result        string                 `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteShortenerResponse) Reset() {
+	*x = DeleteShortenerResponse{}
+	mi := &file_url_shortener_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteShortenerResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteShortenerResponse) ProtoMessage() {}
+
+func (x *DeleteShortenerResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_url_shortener_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteShortenerResponse.ProtoReflect.Descriptor instead.
+func (*DeleteShortenerResponse) Descriptor() ([]byte, []int) {
+	return file_url_shortener_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *DeleteShortenerResponse) GetResult() string {
+	if x != nil {
+		return x.Result
+	}
+	return ""
+}
+
 var File_url_shortener_proto protoreflect.FileDescriptor
 
 const file_url_shortener_proto_rawDesc = "" +
@@ -412,12 +500,17 @@ const file_url_shortener_proto_rawDesc = "" +
 	"\x16GetUrlShortenerRequest\x12\x1a\n" +
 	"\bshortcut\x18\x01 \x01(\tR\bshortcut\"F\n" +
 	"\x17GetUrlShortenerResponse\x12+\n" +
-	"\x06result\x18\x01 \x01(\v2\x13.proto.UrlShortenerR\x06result2\xe6\x02\n" +
+	"\x06result\x18\x01 \x01(\v2\x13.proto.UrlShortenerR\x06result\"+\n" +
+	"\x19DeleteUrlShortenerRequest\x12\x0e\n" +
+	"\x02Id\x18\x01 \x01(\x03R\x02Id\"1\n" +
+	"\x17DeleteShortenerResponse\x12\x16\n" +
+	"\x06result\x18\x01 \x01(\tR\x06result2\xbe\x03\n" +
 	"\x13UrlShortenerService\x12O\n" +
 	"\x0fAddUrlShortener\x12\x1d.proto.AddUrlShortenerRequest\x1a\x1d.proto.AddUrlShorteneResponse\x12Q\n" +
 	"\x13GetAllUrlShorteners\x12\x16.google.protobuf.Empty\x1a\".proto.GetAllUrlShortenersResponse\x12Y\n" +
 	"\x12UpdateUrlShortener\x12 .proto.UpdateUrlShortenerRequest\x1a!.proto.UpdateUrlShortenerResponse\x12P\n" +
-	"\x0fGetUrlShortener\x12\x1d.proto.GetUrlShortenerRequest\x1a\x1e.proto.GetUrlShortenerResponseB\x04Z\x02./b\x06proto3"
+	"\x0fGetUrlShortener\x12\x1d.proto.GetUrlShortenerRequest\x1a\x1e.proto.GetUrlShortenerResponse\x12V\n" +
+	"\x12DeleteUrlShortener\x12 .proto.DeleteUrlShortenerRequest\x1a\x1e.proto.DeleteShortenerResponseB\x04Z\x02./b\x06proto3"
 
 var (
 	file_url_shortener_proto_rawDescOnce sync.Once
@@ -431,7 +524,7 @@ func file_url_shortener_proto_rawDescGZIP() []byte {
 	return file_url_shortener_proto_rawDescData
 }
 
-var file_url_shortener_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_url_shortener_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_url_shortener_proto_goTypes = []any{
 	(*AddUrlShortenerRequest)(nil),      // 0: proto.AddUrlShortenerRequest
 	(*UrlShortener)(nil),                // 1: proto.UrlShortener
@@ -441,25 +534,29 @@ var file_url_shortener_proto_goTypes = []any{
 	(*UpdateUrlShortenerResponse)(nil),  // 5: proto.UpdateUrlShortenerResponse
 	(*GetUrlShortenerRequest)(nil),      // 6: proto.GetUrlShortenerRequest
 	(*GetUrlShortenerResponse)(nil),     // 7: proto.GetUrlShortenerResponse
-	(*emptypb.Empty)(nil),               // 8: google.protobuf.Empty
+	(*DeleteUrlShortenerRequest)(nil),   // 8: proto.DeleteUrlShortenerRequest
+	(*DeleteShortenerResponse)(nil),     // 9: proto.DeleteShortenerResponse
+	(*emptypb.Empty)(nil),               // 10: google.protobuf.Empty
 }
 var file_url_shortener_proto_depIdxs = []int32{
-	1, // 0: proto.GetAllUrlShortenersResponse.result:type_name -> proto.UrlShortener
-	1, // 1: proto.UpdateUrlShortenerRequest.payload:type_name -> proto.UrlShortener
-	1, // 2: proto.GetUrlShortenerResponse.result:type_name -> proto.UrlShortener
-	0, // 3: proto.UrlShortenerService.AddUrlShortener:input_type -> proto.AddUrlShortenerRequest
-	8, // 4: proto.UrlShortenerService.GetAllUrlShorteners:input_type -> google.protobuf.Empty
-	4, // 5: proto.UrlShortenerService.UpdateUrlShortener:input_type -> proto.UpdateUrlShortenerRequest
-	6, // 6: proto.UrlShortenerService.GetUrlShortener:input_type -> proto.GetUrlShortenerRequest
-	2, // 7: proto.UrlShortenerService.AddUrlShortener:output_type -> proto.AddUrlShorteneResponse
-	3, // 8: proto.UrlShortenerService.GetAllUrlShorteners:output_type -> proto.GetAllUrlShortenersResponse
-	5, // 9: proto.UrlShortenerService.UpdateUrlShortener:output_type -> proto.UpdateUrlShortenerResponse
-	7, // 10: proto.UrlShortenerService.GetUrlShortener:output_type -> proto.GetUrlShortenerResponse
-	7, // [7:11] is the sub-list for method output_type
-	3, // [3:7] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	1,  // 0: proto.GetAllUrlShortenersResponse.result:type_name -> proto.UrlShortener
+	1,  // 1: proto.UpdateUrlShortenerRequest.payload:type_name -> proto.UrlShortener
+	1,  // 2: proto.GetUrlShortenerResponse.result:type_name -> proto.UrlShortener
+	0,  // 3: proto.UrlShortenerService.AddUrlShortener:input_type -> proto.AddUrlShortenerRequest
+	10, // 4: proto.UrlShortenerService.GetAllUrlShorteners:input_type -> google.protobuf.Empty
+	4,  // 5: proto.UrlShortenerService.UpdateUrlShortener:input_type -> proto.UpdateUrlShortenerRequest
+	6,  // 6: proto.UrlShortenerService.GetUrlShortener:input_type -> proto.GetUrlShortenerRequest
+	8,  // 7: proto.UrlShortenerService.DeleteUrlShortener:input_type -> proto.DeleteUrlShortenerRequest
+	2,  // 8: proto.UrlShortenerService.AddUrlShortener:output_type -> proto.AddUrlShorteneResponse
+	3,  // 9: proto.UrlShortenerService.GetAllUrlShorteners:output_type -> proto.GetAllUrlShortenersResponse
+	5,  // 10: proto.UrlShortenerService.UpdateUrlShortener:output_type -> proto.UpdateUrlShortenerResponse
+	7,  // 11: proto.UrlShortenerService.GetUrlShortener:output_type -> proto.GetUrlShortenerResponse
+	9,  // 12: proto.UrlShortenerService.DeleteUrlShortener:output_type -> proto.DeleteShortenerResponse
+	8,  // [8:13] is the sub-list for method output_type
+	3,  // [3:8] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_url_shortener_proto_init() }
@@ -473,7 +570,7 @@ func file_url_shortener_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_url_shortener_proto_rawDesc), len(file_url_shortener_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

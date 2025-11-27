@@ -50,11 +50,23 @@ message GetUrlShortenerResponse {
 }
 
 
+message DeleteUrlShortenerRequest {
+    int64 Id = 1;
+
+}
+
+
+message DeleteShortenerResponse { 
+  string result = 1; 
+}
+
+
 service UrlShortenerService {
   rpc AddUrlShortener(AddUrlShortenerRequest) returns (AddUrlShorteneResponse);
   rpc GetAllUrlShorteners(google.protobuf.Empty) returns (GetAllUrlShortenersResponse);
   rpc UpdateUrlShortener(UpdateUrlShortenerRequest) returns (UpdateUrlShortenerResponse);
   rpc GetUrlShortener(GetUrlShortenerRequest) returns (GetUrlShortenerResponse);
+  rpc DeleteUrlShortener(DeleteUrlShortenerRequest) returns (DeleteShortenerResponse);
 }
 
 

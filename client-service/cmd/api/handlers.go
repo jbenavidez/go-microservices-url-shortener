@@ -112,7 +112,6 @@ func (app *application) GetUrlShortener(w http.ResponseWriter, r *http.Request) 
 		app.errorJSON(w, errors.New("invalid shortcut"))
 		return
 	}
-	fmt.Println("the value ", shortcut)
 
 	//set request
 	req := &pb.GetUrlShortenerRequest{
@@ -127,6 +126,34 @@ func (app *application) GetUrlShortener(w http.ResponseWriter, r *http.Request) 
 	resp := JSONResponse{
 		Error:   false,
 		Message: " URL was retrieved successfully",
+		Data:    response.Result,
+	}
+
+	_ = app.writeJSON(w, http.StatusOK, resp)
+
+}
+
+func (app *application) DeleteUrlShortener(w http.ResponseWriter, r *http.Request) {
+	urlID, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+
+	fmt.Println("the url-id", urlID)
+	//set request
+	req := &pb.DeleteUrlShortenerRequest{
+		Id: int64(urlID),
+	}
+	response, err := app.GRPCClient.DeleteUrlShortener(r.Context(), req)
+	if err != nil {
+		fmt.Println("something break", err)
+		return
+	}
+
+	resp := JSONResponse{
+		Error:   false,
+		Message: " URL was updated successfully",
 		Data:    response.Result,
 	}
 

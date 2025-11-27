@@ -107,7 +107,6 @@ func (m *PostgresDBRepo) GetUrlShorteners(urlShorcut string) (*pb.UrlShortener, 
 
 	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
 	defer cancel()
-	fmt.Println("loking form ", urlShorcut)
 	query := `
 		select
 			id, full_path, shortcut
@@ -129,5 +128,22 @@ func (m *PostgresDBRepo) GetUrlShorteners(urlShorcut string) (*pb.UrlShortener, 
 	}
 
 	return &urlShortener, nil
+
+}
+
+func (m *PostgresDBRepo) DeleteUrlShortener(urlID int64) error {
+
+	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
+	defer cancel()
+	stmt := `delete from url_shortener where id=$1`
+
+	_, err := m.DB.ExecContext(ctx, stmt,
+		urlID,
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
 
 }

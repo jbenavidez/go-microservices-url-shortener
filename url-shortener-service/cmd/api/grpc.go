@@ -105,3 +105,15 @@ func (s *server) GetUrlShortener(ctx context.Context, request *pb.GetUrlShortene
 	return &pb.GetUrlShortenerResponse{Result: urlObj}, nil
 
 }
+
+func (s *server) DeleteUrlShortener(ctx context.Context, request *pb.DeleteUrlShortenerRequest) (*pb.DeleteShortenerResponse, error) {
+
+	urlID := request.GetId()
+	//delete record from db
+	err := app.DB.DeleteUrlShortener(urlID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &pb.DeleteShortenerResponse{Result: "url delete succefully"}, nil
+}
