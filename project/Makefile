@@ -26,3 +26,9 @@ down:
 	@echo "Stopping docker compose..."
 	docker-compose down
 	@echo "Done!"
+
+
+db_migrations:
+	@echo "starting migrations..."
+	soda migrate up
+	@echo "Done!"
