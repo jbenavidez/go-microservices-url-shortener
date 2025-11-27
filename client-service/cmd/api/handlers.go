@@ -145,7 +145,7 @@ func (app *application) DeleteUrlShortener(w http.ResponseWriter, r *http.Reques
 	req := &pb.DeleteUrlShortenerRequest{
 		Id: int64(urlID),
 	}
-	response, err := app.GRPCClient.DeleteUrlShortener(r.Context(), req)
+	_, err = app.GRPCClient.DeleteUrlShortener(r.Context(), req)
 	if err != nil {
 		fmt.Println("something break", err)
 		return
@@ -153,8 +153,7 @@ func (app *application) DeleteUrlShortener(w http.ResponseWriter, r *http.Reques
 
 	resp := JSONResponse{
 		Error:   false,
-		Message: " URL was updated successfully",
-		Data:    response.Result,
+		Message: " URL was deleted successfully",
 	}
 
 	_ = app.writeJSON(w, http.StatusOK, resp)
